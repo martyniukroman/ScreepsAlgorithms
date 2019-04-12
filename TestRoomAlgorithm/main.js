@@ -3,6 +3,7 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 
 module.exports.loop = function () {
+    var number = Math.floor(Math.random() * 4);
     
     if(Game.time % 10 == 0){
         console.log('Energy:' + Game.spawns['Spawn1'].energy);
@@ -19,26 +20,21 @@ module.exports.loop = function () {
                 console.log('Clearing non-existing creep memory:', name);
             }
         }
-        console.log('------------------------');
-        var number = Math.floor(Math.random() * 4);
-        if (number == 2) {
-            number == 0;
-        }
+
         if (upgraders.length < 5) {
+            if (number == 2){ number = 0; }
              Game.spawns['Spawn1'].createCreep([WORK, CARRY, CARRY, MOVE, MOVE], undefined, {role: 'upgrader', sourceNumber: number});
         }
         if (builders.length < 10) {
+            if (number == 2){ number = 1; }
             Game.spawns['Spawn1'].createCreep([WORK, CARRY, CARRY, MOVE, MOVE], undefined, {role: 'builder', sourceNumber: number});
         }
         if (harvesters.length < 5) {
+            if (number == 2){ number = 3; }
             Game.spawns['Spawn1'].createCreep([WORK, CARRY, CARRY, MOVE, MOVE], undefined, {role: 'harvester', sourceNumber: number});
         }
         
-         if(Game.spawns['Spawn1'].spawning) {
-            var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
-            Game.spawns['Spawn1'].room.visual.text(
-                '🛠️' + spawningCreep.memory.role);
-        }
+        console.log('------------------------');
         
     }
    
@@ -59,6 +55,11 @@ module.exports.loop = function () {
 
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
+        
+        if (creep.memory.number == 2) {
+            creep.memory.number = Math.floor(Math.random() * 2);;
+        }
+        
         if(creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }
