@@ -1,4 +1,4 @@
-﻿var roleBuilder = {
+var roleBuilder = {
 
     run: function(creep) {
 
