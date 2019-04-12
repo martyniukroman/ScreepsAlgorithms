@@ -1,4 +1,4 @@
-var roleHarvester = {
+﻿var roleHarvester = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
@@ -16,13 +16,11 @@ var roleHarvester = {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[creep.memory.sourceNumber]) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(sources[creep.memory.sourceNumber], {visualizePathStyle: {stroke: '#ffffff'}});
-                
             }
         }
         else {
             if(creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
-                
             }
         }
     }
