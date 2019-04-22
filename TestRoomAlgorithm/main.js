@@ -4,7 +4,11 @@ var roleBuilder = require('role.builder');
 var roleSolder = require('role.solder');
 
 module.exports.loop = function () {
+<<<<<<< HEAD
     var numberRand = Math.floor(Math.random() * 2);
+=======
+    var number = Math.floor(Math.random() * 2);
+>>>>>>> e354ab6c163ce83d70766ed8e987b71fea733a39
 
     if (Game.time % 10 == 0) {
         console.log('Energy:' + Game.spawns['Spawn1'].energy);
