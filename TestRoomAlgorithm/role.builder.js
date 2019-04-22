@@ -18,6 +18,9 @@
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }
+            else{
+                creep.moveTo(20,30);
+            }
         }
         else {
             var sources = creep.room.find(FIND_SOURCES);
