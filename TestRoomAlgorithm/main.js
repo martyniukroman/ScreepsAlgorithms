@@ -53,20 +53,6 @@ module.exports.loop = function () {
 
     }
 
-    var tower = Game.getObjectById('5cb590c992df111cb6ef2631');
-    if (tower) {
-        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        if (closestHostile) {
-            tower.attack(closestHostile);
-        }
-        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => structure.hits < structure.hitsMax
-        });
-        if (closestDamagedStructure) {
-            tower.repair(closestDamagedStructure);
-        }
-    }
-
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
         
@@ -87,4 +73,20 @@ module.exports.loop = function () {
             roleBuilder.run(creep);
         }
     }
+    
+    var tower = Game.getObjectById('5cb590c992df111cb6ef2631');
+    if (tower) {
+        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        if (closestHostile) {
+            tower.attack(closestHostile);
+            return;
+        }
+        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+            filter: (structure) => structure.hits < structure.hitsMax
+        });
+        if (closestDamagedStructure) {
+            tower.repair(closestDamagedStructure);
+        }
+    }
+    
 }
