@@ -4,11 +4,7 @@ var roleBuilder = require('role.builder');
 var roleSolder = require('role.solder');
 
 module.exports.loop = function () {
-<<<<<<< HEAD
     var numberRand = Math.floor(Math.random() * 2);
-=======
-    var number = Math.floor(Math.random() * 2);
->>>>>>> e354ab6c163ce83d70766ed8e987b71fea733a39
 
     if (Game.time % 10 == 0) {
         console.log('Energy:' + Game.spawns['Spawn1'].energy);
@@ -35,19 +31,19 @@ module.exports.loop = function () {
         //     });
         // }
         if (upgraders.length < 3) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], "upgrader-"  + Game.time, {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "upgrader-"  + Game.time, {
                 role: 'upgrader',
                 sourceNumber: 0
             });
         }
         if (builders.length < 3) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], "builder-"  + Game.time, {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "builder-"  + Game.time, {
                 role: 'builder',
                 sourceNumber: 0
             });
         }
         if (harvesters.length < 5) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], "harvester-"  + Game.time, {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "harvester-"  + Game.time, {
                 role: 'harvester',
                 sourceNumber: 1
             });
@@ -62,7 +58,6 @@ module.exports.loop = function () {
         var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if (closestHostile) {
             tower.attack(closestHostile);
-            return;
         }
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => structure.hits < structure.hitsMax
@@ -74,7 +69,7 @@ module.exports.loop = function () {
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
-
+        
         if (creep.memory.role == 'solder') {
             roleSolder.run(creep);
         }
