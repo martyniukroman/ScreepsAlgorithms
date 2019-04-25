@@ -1,4 +1,4 @@
-var roleBuilder = {
+﻿var roleBuilder = {
 
     run: function(creep) {
 
@@ -19,7 +19,7 @@ var roleBuilder = {
                 }
             }
             else{
-                creep.moveTo(20,30);
+                creep.moveTo(6,27);
             }
         }
         else {

@@ -14,7 +14,7 @@
         
         if(!creep.memory.harvesting) {
             
-            var energy = creep.room.find(FIND_DROPPED_RESOURCES, 1);
+            var energy = creep.room.find(FIND_DROPPED_RESOURCES, {filter: (d) => {return (d.resourceType == RESOURCE_ENERGY)}});
             if (energy.length) {
                if(creep.pickup(energy[0])){
                     creep.moveTo(energy[0], {visualizePathStyle: {stroke: '#ffffff'}});
@@ -41,14 +41,15 @@
             var closestHostile = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
             if (closestHostile) {
                 targetStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-                filter: (structure) => {
-                    return structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity;
-                }
-            });
+                    filter: (structure) => {
+                        return structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity;
+                    }
+                });
             }
             
             if (targetStructure == undefined) {
                 creep.memory.harvesting = false;
+                creep.moveTo(6, 27);
             }
 
             if(creep.transfer(targetStructure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

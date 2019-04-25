@@ -17,35 +17,46 @@ module.exports.loop = function () {
         var solders = _.filter(Game.creeps, (creep) => creep.memory.role == 'solder');
         console.log('Solders: ' + solders.length);
 
+        var allcreeps = _.filter(Game.creeps);
+        console.log('All creeps: ' + allcreeps.length);
+        
+        if(allcreeps.length < 5){
+            Game.spawns['Spawn1'].createCreep([WORK, CARRY, MOVE], "harvester-"  + Game.time, {
+                role: 'harvester',
+                sourceNumber: numberRand
+            });
+        }
+
         for (var name in Memory.creeps) {
             if (!Game.creeps[name]) {
                 delete Memory.creeps[name];
                 console.log('Clearing non-existing creep memory:', name);
             }
         }
-
-        // if (solders.length < 3) {
-        //     Game.spawns['Spawn1'].createCreep([ATTACK, WORK, CARRY, CARRY, MOVE, MOVE], "solder-"  + Game.time, {
-        //         role: 'solder',
-        //         sourceNumber: numberRand
-        //     });
-        // }
+        var constructions = allcreeps[0].room.find(FIND_CONSTRUCTION_SITES);
+       // [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE]
+        if (solders.length < 3 && constructions.length == 0) {
+            Game.spawns['Spawn1'].createCreep([ATTACK, ATTACK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE], "solder-"  + Game.time, {
+                role: 'solder',
+                sourceNumber: numberRand
+            });
+        }
         if (upgraders.length < 3) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "upgrader-"  + Game.time, {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "upgrader-"  + Game.time, {
                 role: 'upgrader',
-                sourceNumber: 0
+                sourceNumber: numberRand
             });
         }
         if (builders.length < 3) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "builder-"  + Game.time, {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "builder-"  + Game.time, {
                 role: 'builder',
-                sourceNumber: 0
+                sourceNumber: numberRand
             });
         }
         if (harvesters.length < 5) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "harvester-"  + Game.time, {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "harvester-"  + Game.time, {
                 role: 'harvester',
-                sourceNumber: 1
+                sourceNumber: numberRand
             });
         }
 
@@ -55,16 +66,17 @@ module.exports.loop = function () {
 
     for (var name in Game.creeps) {
         var creep = Game.creeps[name];
+        var sources = creep.room.find(FIND_SOURCES);
+        
+        if (sources[creep.memory.sourceNumber].energy == 0) {
+            creep.memory.sourceNumber = numberRand;
+        }
         
         if (creep.memory.role == 'solder') {
             roleSolder.run(creep);
         }
         if (creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
-            var sources = creep.room.find(FIND_SOURCES);
-            if (sources[creep.memory.sourceNumber].energy == 0) {
-                creep.memory.sourceNumber = numberRand;
-            }
         }
         if (creep.memory.role == 'upgrader') {
             roleUpgrader.run(creep);
@@ -73,8 +85,27 @@ module.exports.loop = function () {
             roleBuilder.run(creep);
         }
     }
+//     var towers = creep.room.find(FIND_STRUCTURES, { filter: (structure) => 
+//     { return structure.structureType == STRUCTURE_TOWER }});
     
-    var tower = Game.getObjectById('5cb590c992df111cb6ef2631');
+//     for(var tower in towers){
+//         console.log('tower' + tower);
+//         if (tower) {
+//             var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+//             if (closestHostile) {
+//                 tower.attack(closestHostile);
+//                 return;
+//             }
+//             var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+//                 filter: (structure) => structure.hits < structure.hitsMax
+//             });
+//             if (closestDamagedStructure) {
+//                 tower.repair(closestDamagedStructure);
+//             }
+//         }
+//   }
+
+   var tower = Game.getObjectById('5cb590c992df111cb6ef2631');
     if (tower) {
         var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if (closestHostile) {

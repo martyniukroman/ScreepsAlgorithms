@@ -13,7 +13,7 @@ var roleSolder = {
             }
         }
         else {
-            creep.moveTo(20, 30);
+            creep.moveTo(6, 27);
         }
     }
 };
