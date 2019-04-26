@@ -35,7 +35,7 @@ module.exports.loop = function () {
         }
         var constructions = allcreeps[0].room.find(FIND_CONSTRUCTION_SITES);
        // [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE]
-        if (solders.length < 3 && constructions.length == 0) {
+        if (solders.length < 5 && constructions.length == 0) {
             Game.spawns['Spawn1'].createCreep([ATTACK, ATTACK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE], "solder-"  + Game.time, {
                 role: 'solder',
                 sourceNumber: numberRand
@@ -47,7 +47,7 @@ module.exports.loop = function () {
                 sourceNumber: numberRand
             });
         }
-        if (builders.length < 3) {
+        if (builders.length < 3 && constructions.length) {
             Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "builder-"  + Game.time, {
                 role: 'builder',
                 sourceNumber: numberRand
@@ -85,39 +85,22 @@ module.exports.loop = function () {
             roleBuilder.run(creep);
         }
     }
-//     var towers = creep.room.find(FIND_STRUCTURES, { filter: (structure) => 
-//     { return structure.structureType == STRUCTURE_TOWER }});
-    
-//     for(var tower in towers){
-//         console.log('tower' + tower);
-//         if (tower) {
-//             var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-//             if (closestHostile) {
-//                 tower.attack(closestHostile);
-//                 return;
-//             }
-//             var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-//                 filter: (structure) => structure.hits < structure.hitsMax
-//             });
-//             if (closestDamagedStructure) {
-//                 tower.repair(closestDamagedStructure);
-//             }
-//         }
-//   }
 
-   var tower = Game.getObjectById('5cb590c992df111cb6ef2631');
-    if (tower) {
-        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        if (closestHostile) {
-            tower.attack(closestHostile);
-            return;
-        }
-        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => structure.hits < structure.hitsMax
-        });
-        if (closestDamagedStructure) {
-            tower.repair(closestDamagedStructure);
+    var towers = [Game.getObjectById('5cb590c992df111cb6ef2631'), Game.getObjectById('5cc1d88d91abf10e34748e8c')];
+
+    for(let i = 0; i < towers.length; i++){
+        if (towers[i]) {
+            var closestHostile =  towers[i].pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+               if (closestHostile) {
+                   towers[i].attack(closestHostile);
+                   return;
+               }
+               var closestDamagedStructure =  towers[i].pos.findClosestByRange(FIND_STRUCTURES, {
+                   filter: (structure) => structure.hits < structure.hitsMax
+               });
+               if (closestDamagedStructure) {
+                    towers[i].repair(closestDamagedStructure);
+               }
         }
     }
-    
 }
