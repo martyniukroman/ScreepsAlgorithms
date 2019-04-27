@@ -35,27 +35,27 @@ module.exports.loop = function () {
         }
         var constructions = allcreeps[0].room.find(FIND_CONSTRUCTION_SITES);
        // [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE]
-        if (solders.length < 5 && constructions.length == 0) {
-            Game.spawns['Spawn1'].createCreep([ATTACK, ATTACK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE], "solder-"  + Game.time, {
-                role: 'solder',
+       if (harvesters.length < 5) {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "harvester-"  + Game.time, {
+                role: 'harvester',
                 sourceNumber: numberRand
             });
         }
-        if (upgraders.length < 3) {
+        else if (upgraders.length < 3) {
             Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "upgrader-"  + Game.time, {
                 role: 'upgrader',
                 sourceNumber: numberRand
             });
         }
-        if (builders.length < 3 && constructions.length) {
+        else if (builders.length < 3 && constructions.length) {
             Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "builder-"  + Game.time, {
                 role: 'builder',
                 sourceNumber: numberRand
             });
         }
-        if (harvesters.length < 5) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "harvester-"  + Game.time, {
-                role: 'harvester',
+        else if (solders.length < 5 && constructions.length == 0) {
+            Game.spawns['Spawn1'].createCreep([ATTACK, ATTACK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE], "solder-"  + Game.time, {
+                role: 'solder',
                 sourceNumber: numberRand
             });
         }
@@ -94,12 +94,15 @@ module.exports.loop = function () {
                if (closestHostile) {
                    towers[i].attack(closestHostile);
                }
-               var closestDamagedStructure =  towers[i].pos.findClosestByRange(FIND_STRUCTURES, {
-                   filter: (structure) => structure.hits < structure.hitsMax
-               });
-               if (closestDamagedStructure) {
-                    towers[i].repair(closestDamagedStructure);
+               else {
+                    var closestDamagedStructure =  towers[i].pos.findClosestByRange(FIND_STRUCTURES, {
+                       filter: (structure) => structure.hits < structure.hitsMax
+                    });
+                    if (closestDamagedStructure) {
+                        towers[i].repair(closestDamagedStructure);
+                    }
                }
+             
         }
     }
 }
