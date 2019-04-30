@@ -1,7 +1,7 @@
 var roleSolder = {
     run: function (creep) {
         var hostile = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS)
-        if (hostile && creep.energy >= creep.carryCapacity * 2) {
+        if (hostile && creep.energy) {
             if (creep.attack(hostile) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(hostile);
             }
