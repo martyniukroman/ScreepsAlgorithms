@@ -36,19 +36,19 @@ module.exports.loop = function () {
         var constructions = allcreeps[0].room.find(FIND_CONSTRUCTION_SITES);
        // [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE]
        if (harvesters.length < 5) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "harvester-"  + Game.time, {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], "harvester-"  + Game.time, {
                 role: 'harvester',
                 sourceNumber: numberRand
             });
         }
         else if (upgraders.length < 3) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "upgrader-"  + Game.time, {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], "upgrader-"  + Game.time, {
                 role: 'upgrader',
                 sourceNumber: numberRand
             });
         }
         else if (builders.length < 3 && constructions.length) {
-            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], "builder-"  + Game.time, {
+            Game.spawns['Spawn1'].createCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], "builder-"  + Game.time, {
                 role: 'builder',
                 sourceNumber: numberRand
             });
@@ -86,7 +86,7 @@ module.exports.loop = function () {
         }
     }
 
-    var towers = [Game.getObjectById('5cb590c992df111cb6ef2631'), Game.getObjectById('5cc1d88d91abf10e34748e8c')];
+    var towers = [Game.getObjectById('5cc47380a67fbd10062bf9bd'), Game.getObjectById('5cc1d88d91abf10e34748e8c')];
 
     for(let i = 0; i < towers.length; i++){
         if (towers[i]) {
