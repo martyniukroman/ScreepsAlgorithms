@@ -86,7 +86,7 @@ module.exports.loop = function () {
         }
     }
 
-    var towers = [Game.getObjectById('5cc47380a67fbd10062bf9bd'), Game.getObjectById('5cc1d88d91abf10e34748e8c')];
+    var towers = _.filter(Game.structures, s => s.structureType == STRUCTURE_TOWER);
 
     for(let i = 0; i < towers.length; i++){
         if (towers[i]) {
